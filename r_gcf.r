@@ -14,22 +14,16 @@ naive <- function(val) {
 }
 
 get_gcf <- function(func, params) {
-  sets <- lapply(params, func)
+  sets <- lapply(lapply(params, abs), func)
   temp <- Reduce(intersect, sets)
   return(max(temp))
 }
 
 vals <- c(1600, 1200, 800)
 
-Rprof(tmp <- tempfile())
-get_gcf(naive, vals)
-Rprof()
-summaryRprof(tmp)
-
-print("===============")
-
 mod_get_gcf <- function(func, params) {
-  params <- sort(params)
+  params <- lapply(sort(params), abs)
+  params <- unlist(params)
   sets <- func(params[1])
   limit <- max(sets)
   
@@ -54,13 +48,6 @@ improved <- function(val, limit=0) {
   
   return(factors)
 }
-
-unlink(tmp)
-
-Rprof(tmp <- tempfile())
-mod_get_gcf(improved, vals)
-Rprof()
-summaryRprof(tmp)
 
 # Average of n runs...
 n = 100
