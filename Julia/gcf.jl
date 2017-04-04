@@ -43,21 +43,21 @@ function improved_modulo(val, limit=0)
     return factors
 end
 
-function hinted_get_gcf(func, params::Array{Int64, 1})::Int64
+function hinted_get_gcf(func, params::Array{Int, 1})::Int
     params = sort(map(abs, params))
-    sets = []
+    sets::Array{} = []
     push!(sets, func(params[1]))
-    limit = max(sets[1]...)
-    
-    append!(sets, [func(val, limit) for val in params[2:end]])
-    temp = Set(reduce((x, y) -> intersect(x,y), sets))
+    limit::Int = max(sets[1]...)
+
+    append!(sets, [func(val, limit) for val::Int in params[2:end]])
+    temp::Set{Int} = Set(reduce((x, y) -> intersect(x,y), sets))
     
     return max(temp...)
 end
 
-function hinted_modulo(val, limit=0::Int)::Array{Int64, 1}
-    factors = []
-    for x in 1:val
+function hinted_modulo(val::Int, limit=0::Int)::Array{Int, 1}
+    factors::Array{Int,1} = []
+    for x::Int in 1:val
         if limit != 0 && x > limit
             return factors
         end
