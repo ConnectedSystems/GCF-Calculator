@@ -6,8 +6,8 @@ function get_gcf(func, params)
 end
 
 function naive_jl(val)
-    factors = []
-    for x in 1:val
+    factors = [1, val]
+    for x in 2:(val - 1)
         for y in x:val
             if (x * y) == val
                 append!(factors,[x,y])
@@ -30,8 +30,8 @@ function mod_get_gcf(func, params)
 end
 
 function improved_modulo(val, limit=0)
-    factors = []
-    for x in 1:val
+    factors = [1, val]
+    for x in 2:(val - 1)
         if limit != 0 && x > limit
             return factors
         end
@@ -73,27 +73,32 @@ values = [1600, 1200, 800]
 
 println("Julia is JIT compiled, so we will run the functions multiple times")
 println("Naive gcf with $(values)")
+println(get_gcf(naive_jl, values))
 @time get_gcf(naive_jl, values)
 @time get_gcf(naive_jl, values)
 @time get_gcf(naive_jl, values)
 
 expanded = [1600, 1200, 800, 8000, 7260, 9800, 6520]
 println("Naive gcf with $(expanded)")
+println(get_gcf(naive_jl, expanded))
 @time get_gcf(naive_jl, expanded)
 @time get_gcf(naive_jl, expanded)
 @time get_gcf(naive_jl, expanded)
 
 println("Improved gcf with $(values)")
+println(mod_get_gcf(improved_modulo, values))
 @time mod_get_gcf(improved_modulo, values)
 @time mod_get_gcf(improved_modulo, values)
 @time mod_get_gcf(improved_modulo, values)
 
 println("Improved gcf with $(expanded)")
+println(mod_get_gcf(improved_modulo, expanded))
 @time mod_get_gcf(improved_modulo, expanded)
 @time mod_get_gcf(improved_modulo, expanded)
 @time mod_get_gcf(improved_modulo, expanded)
 
 println("Type hinted gcf, using $(expanded)")
+println(hinted_get_gcf(hinted_modulo, expanded))
 @time hinted_get_gcf(hinted_modulo, expanded)
 @time hinted_get_gcf(hinted_modulo, expanded)
 @time hinted_get_gcf(hinted_modulo, expanded)
