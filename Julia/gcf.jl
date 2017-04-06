@@ -1,7 +1,7 @@
 function get_gcf(func, params)
     sets = map(func, map(abs, params))
     temp = Set(reduce((x, y) -> intersect(x, y), sets ))
-    
+
     return max(temp...)
 end
 
@@ -22,10 +22,10 @@ function mod_get_gcf(func, params)
     sets = []
     push!(sets, func(params[1]))
     limit = max(sets[1]...)
-    
+
     append!(sets, [func(val, limit) for val in params[2:end]])
     temp = Set(reduce((x, y) -> intersect(x,y), sets))
-    
+
     return max(temp...)
 end
 
@@ -35,7 +35,7 @@ function improved_modulo(val, limit=0)
         if limit != 0 && x > limit
             return factors
         end
-        
+
         if (val % x) == 0
             push!(factors, x)
         end
@@ -49,9 +49,9 @@ function hinted_get_gcf(func, params::Array{Int, 1})::Int
     push!(sets, func(params[1]))
     limit::Int = max(sets[1]...)
 
-    append!(sets, [func(val, limit) for val::Int in params[2:end]])
+    append!(sets, func(val, limit) for val::Int in params[2:end])
     temp::Set{Int} = Set(reduce((x, y) -> intersect(x,y), sets))
-    
+
     return max(temp...)
 end
 
@@ -61,7 +61,7 @@ function hinted_modulo(val::Int, limit=0::Int)::Array{Int, 1}
         if limit != 0 && x > limit
             return factors
         end
-        
+
         if (val % x) == 0
             push!(factors, x)
         end
