@@ -1,4 +1,4 @@
-# Run this file with `julia -p 3 parallel_gcf.jl` to get accurate timings for parallel example
+# Run this file with `julia -p 3 parallel_gcf.jl` to get timings for parallel example
 # the number after 'p' should be one less than the total number of physical cores on the machine.
 
 include("gcf.jl")  # Evaluate all code within specified file
