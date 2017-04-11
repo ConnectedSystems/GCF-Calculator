@@ -69,6 +69,14 @@ function hinted_modulo(val::Int, limit=0::Int)::Array{Int, 1}
     return factors
 end
 
+function recursive(x1, x2)
+    if x2 == 0
+        return x1
+    else
+        return recursive(x2, x1 % x2)
+    end
+end
+
 values = [1600, 1200, 800]
 
 println("Julia is JIT compiled, so we will run the functions multiple times")
@@ -102,3 +110,10 @@ println(hinted_get_gcf(hinted_modulo, expanded))
 @time hinted_get_gcf(hinted_modulo, expanded)
 @time hinted_get_gcf(hinted_modulo, expanded)
 @time hinted_get_gcf(hinted_modulo, expanded)
+
+println("Recursive approach")
+
+println(reduce((x, y) -> recursive(x, y), expanded))
+@time reduce((x, y) -> recursive(x, y), expanded)
+@time reduce((x, y) -> recursive(x, y), expanded)
+@time reduce((x, y) -> recursive(x, y), expanded)
