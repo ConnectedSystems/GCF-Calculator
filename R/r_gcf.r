@@ -4,9 +4,9 @@ naive <- function(val) {
 
   factors <- c(1, val)
 
-  for(x in seq(2:val-1)) {
-    for(y in seq(x:val-1)){
-      if((x * y) == val) {
+  for (x in seq(2:val - 1)) {
+    for (y in seq(x:val - 1)){
+      if ( (x * y) == val) {
         factors <- c(factors, c(y))
       }
     }
@@ -18,12 +18,12 @@ naive <- function(val) {
 improved <- function(val, limit=0) {
   factors <- c(1)
 
-  for(x in seq(2:val-1)) {
+  for (x in seq(2:val - 1)) {
     if (limit > 0 && x > limit) {
       return(factors)
     }
 
-    if ((val %% x) == 0) {
+    if ( (val %% x) == 0) {
       factors <- c(factors, x)
     }
   }
@@ -32,13 +32,13 @@ improved <- function(val, limit=0) {
 }
 
 get_gcf <- function(func, params) {
-  sets <- lapply(lapply(params, abs), func)
+  sets <- lapply(abs(params), func)
   temp <- Reduce(intersect, sets)
   return(max(temp))
 }
 
 mod_get_gcf <- function(func, params) {
-  params <- lapply(sort(params), abs)
+  params <- sort(abs(params))
   params <- unlist(params)
   sets <- func(params[1])
   limit <- max(sets)

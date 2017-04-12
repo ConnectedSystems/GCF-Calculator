@@ -8,7 +8,7 @@ srand(100)  # seed the random number generator
 extra = rand(16000:151296,10000)  # random number between 16000 to 151296, array of 1 by 10000
 
 function parallel_get_gcf(func, params::Array{Int, 1})::Int
-    params = sort(map(abs, params))
+    params = sort(abs(params))
     m = size(params)[1]
     sets::Array{Any, 1} = []
     push!(sets, func(params[1]))

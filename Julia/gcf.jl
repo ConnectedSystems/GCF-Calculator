@@ -1,5 +1,5 @@
 function get_gcf(func, params)
-    sets = map(func, map(abs, params))
+    sets = map(func, abs(params))
     temp = Set(reduce(intersect, sets))
 
     return max(temp...)
@@ -18,7 +18,7 @@ function naive_jl(val)
 end
 
 function mod_get_gcf(func, params)
-    params = sort(map(abs, params))
+    params = sort(abs(params))
     sets = []
     push!(sets, func(params[1]))
     limit = max(sets[1]...)
@@ -44,7 +44,7 @@ function improved_modulo(val, limit=0)
 end
 
 function hinted_get_gcf(func, params::Array{Int, 1})::Int
-    params = sort(map(abs, params))
+    params = sort(abs(params))
     sets::Array{} = []
     push!(sets, func(params[1]))
     limit::Int = max(sets[1]...)
@@ -112,8 +112,7 @@ println(hinted_get_gcf(hinted_modulo, expanded))
 @time hinted_get_gcf(hinted_modulo, expanded)
 
 println("Recursive approach")
-abs_exp = [abs(i) for i in expanded]
-println(reduce(recursive, abs_exp))
-@time reduce(recursive, abs_exp)
-@time reduce(recursive, abs_exp)
-@time reduce(recursive, abs_exp)
+println(reduce(recursive, abs(expanded)))
+@time reduce(recursive, abs(expanded))
+@time reduce(recursive, abs(expanded))
+@time reduce(recursive, abs(expanded))
