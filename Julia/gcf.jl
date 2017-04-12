@@ -72,9 +72,9 @@ end
 function recursive(x1, x2)
     if x2 == 0
         return x1
-    else
-        return recursive(x2, x1 % x2)
     end
+
+    return recursive(x2, x1 % x2)
 end
 
 values = [1600, 1200, 800]
@@ -112,8 +112,8 @@ println(hinted_get_gcf(hinted_modulo, expanded))
 @time hinted_get_gcf(hinted_modulo, expanded)
 
 println("Recursive approach")
-
-println(reduce((x, y) -> recursive(x, y), expanded))
-@time reduce((x, y) -> recursive(x, y), expanded)
-@time reduce((x, y) -> recursive(x, y), expanded)
-@time reduce((x, y) -> recursive(x, y), expanded)
+abs_exp = [abs(i) for i in expanded]
+println(reduce(recursive, abs_exp))
+@time reduce(recursive, abs_exp)
+@time reduce(recursive, abs_exp)
+@time reduce(recursive, abs_exp)
