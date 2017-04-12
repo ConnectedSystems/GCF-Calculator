@@ -19,7 +19,7 @@ function parallel_get_gcf(func, params::Array{Int, 1})::Int
         [func(i, limit)]
     end
 
-    temp::Set{Int} = Set(reduce((x, y) -> intersect(x,y), sets))
+    temp::Set{Int} = Set(reduce(intersect, sets))
     return max(temp...)
 end
 
