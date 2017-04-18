@@ -19,8 +19,7 @@ end
 
 function mod_get_gcf(func, params)
     params = sort(abs(params))
-    sets = []
-    push!(sets, func(params[1]))
+    sets = [func(params[1])]
     limit = max(sets[1]...)
 
     append!(sets, [func(val, limit) for val in params[2:end]])
@@ -45,8 +44,7 @@ end
 
 function hinted_get_gcf(func, params::Array{Int, 1})::Int
     params = sort(abs(params))
-    sets::Array{} = []
-    push!(sets, func(params[1]))
+    sets::Array{} = [func(params[1])]
     limit::Int = max(sets[1]...)
 
     append!(sets, func(val, limit) for val::Int in params[2:end])

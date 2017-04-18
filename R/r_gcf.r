@@ -32,13 +32,13 @@ improved <- function(val, limit=0) {
 }
 
 get_gcf <- function(func, params) {
-  sets <- lapply(abs(params), func)
+  sets <- lapply(lapply(params, abs), func)
   temp <- Reduce(intersect, sets)
   return(max(temp))
 }
 
 mod_get_gcf <- function(func, params) {
-  params <- sort(abs(params))
+  params <- lapply(sort(params), abs)
   params <- unlist(params)
   sets <- func(params[1])
   limit <- max(sets)
