@@ -27,7 +27,7 @@ end
 
 values = [1600, 1200, 800]
 srand(100)
-expanded = rand(100000:2500000, 2000000)
+params = rand(100000:2500000, 2000000)
 
 println("Julia is JIT compiled, so we will run the functions multiple times")
 println("Naive gcf with $(values)")
@@ -36,8 +36,8 @@ println(get_gcf(naive_jl, values))
 @time get_gcf(naive_jl, values)
 @time get_gcf(naive_jl, values)
 
-println("Recursive approach with $(expanded[1:10])...")
-println(reduce(recursive, abs(expanded)))
-@time reduce(recursive, abs(expanded))
-@time reduce(recursive, abs(expanded))
-@time reduce(recursive, abs(expanded))
+println("Recursive approach with $(params[1:10])...")
+println(reduce(recursive, abs(params)))
+@time reduce(recursive, abs(params))
+@time reduce(recursive, abs(params))
+@time reduce(recursive, abs(params))
