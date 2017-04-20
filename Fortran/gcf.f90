@@ -15,7 +15,7 @@ program gcf
     ! Some other implementations of interest perhaps: https://rosettacode.org/wiki/Greatest_common_divisor#Recursive_Euclid_algorithm_3
     print *, 'How many numbers do you want to process?'
     read(*, *) nums_to_process
-    print *, 'Enter these numbers, but beware they must be positive integers or I will crash'
+    print *, 'Enter these numbers'
     allocate(search_vals(nums_to_process))
     read(*, *) (search_vals(i), i=1,nums_to_process)
 
