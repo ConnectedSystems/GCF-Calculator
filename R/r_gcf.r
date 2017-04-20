@@ -65,7 +65,7 @@ vals <- c(1600, 1200, 800)
 microbenchmark(mod_get_gcf(improved, vals))
 # 1.8765 milliseconds = 1876.5 microseconds
 
-expanded <- c(1600, 1200, 800, 8000, 7260, 9800, 6520)
+expanded <- c(1600, 1200, 800, 8000, 7260, 9800, 6520, 1020, 10220, 16420)
 microbenchmark(mod_get_gcf(improved, expanded))
 # 3.92 milliseconds = 3920 microseconds
 
