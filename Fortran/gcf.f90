@@ -3,7 +3,8 @@ program gcf
     integer, allocatable :: search_vals(:)
     integer :: nums_to_process
     integer :: i, val, res, ans, ans2
-    
+    real :: t1, t2
+
     interface
        function gcf_recursive(x1, x2) result(res)
          integer :: res
@@ -16,10 +17,15 @@ program gcf
     read(*, *) nums_to_process
     print *, 'Enter these numbers, but beware they must be positive integers or I will crash'
     allocate(search_vals(nums_to_process))
-    read(*, *) (search_vals(i), i=1,nums_to_process) 
-    
-    !search_vals = (/ 1600, 1200, 800 /)
-    
+    read(*, *) (search_vals(i), i=1,nums_to_process)
+
+    call cpu_time ( t1 )
+
+    ! get absolute values
+    do i = 1, size(search_vals)
+        search_vals(i) = abs(search_vals(i))
+    end do
+
     ! Manual implementation of reduce
     do i = 1, size(search_vals) - 1
         if( i == 1 ) then
@@ -29,7 +35,9 @@ program gcf
             val = res
         end if
     end do
-    
+    call cpu_time ( t2 )
+    write ( *, * ) 'Elapsed CPU time = ', t2 - t1
+
     print *, 'The answer you seek is: ', val
 
 end program
