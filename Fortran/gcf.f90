@@ -36,7 +36,7 @@ program gcf
         end if
     end do
     call cpu_time ( t2 )
-    write ( *, * ) 'Elapsed CPU time = ', t2 - t1
+    write ( *, * ) 'Elapsed CPU time = ', t2 - t1, ' microseconds'
 
     print *, 'The answer you seek is: ', val
 
