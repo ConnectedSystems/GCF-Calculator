@@ -1,8 +1,4 @@
-include("gcf.jl")  # Evaluate all code within specified file
-
-println("Extending to parallel processing was very easy")
-srand(100)  # seed the random number generator
-extra = rand(100000:2500000, 2000000)
+using BenchmarkTools
 
 # Number of processors to use, should be 1 less than num of physical cores.
 addprocs(3)
@@ -20,21 +16,6 @@ function parallel_get_gcf(params::Array{Int, 1})::Int
     return res
 end
 
-# Redefine example function with @everywhere macro to make the function available on all processes
-@everywhere function hinted_modulo2(val::Int, limit=0::Int)::Array{Int, 1}
-    factors::Array{Int,1} = []
-    for x::Int in 1:val
-        if limit != 0 && x > limit
-            return factors
-        end
-
-        if (val % x) == 0
-            push!(factors, x)
-        end
-    end
-    return factors
-end
-
 @everywhere function recursive(x1::Int, x2::Int)::Int
     if x2 == 0
         return x1
@@ -43,9 +24,10 @@ end
     return recursive(x2, x1 % x2)
 end
 
-array_size = size(extra)
-println("Parallel GCF with array with ($array_size) elements")
-println(parallel_get_gcf(extra))
-@time parallel_get_gcf(extra)
-@time parallel_get_gcf(extra)
-@time parallel_get_gcf(extra)
+println("Extending to parallel processing was very easy")
+
+search_vals = vec(readdlm("input.in", ' ', Int, skipstart=1))
+println("Parallel GCF with array with ($length(search_vals)) elements")
+println(parallel_get_gcf(search_vals))
+t = @benchmark parallel_get_gcf($search_vals) samples=5 gcsample=true
+println(mean(t))

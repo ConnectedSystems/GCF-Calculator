@@ -1,3 +1,5 @@
+using BenchmarkTools
+
 function get_gcf(func, params)
     sets = map(func, abs(params))
     temp = Set(reduce(intersect, sets))
@@ -26,18 +28,15 @@ function recursive(x1::Int, x2::Int)::Int
 end
 
 values = [1600, 1200, 800]
-srand(100)
-params = rand(100000:2500000, 2000000)
 
-println("Julia is JIT compiled, so we will run the functions multiple times")
+println("Julia is JIT compiled, so we will run the functions multiple times to get indicative timing")
 println("Naive gcf with $(values)")
 println(get_gcf(naive_jl, values))
-@time get_gcf(naive_jl, values)
-@time get_gcf(naive_jl, values)
-@time get_gcf(naive_jl, values)
+t = @benchmark get_gcf($naive_jl, $values) samples=100 gcsample=true
+println("Mean: ", mean(t), " Median: ", median(t))
 
-println("Recursive approach with $(params[1:10])...")
-println(reduce(recursive, abs(params)))
-@time reduce(recursive, abs(params))
-@time reduce(recursive, abs(params))
-@time reduce(recursive, abs(params))
+search_vals = readdlm("../data/input.in", ' ', Int, skipstart=1)
+println("Recursive approach with $(length(search_vals)) values...")
+println(reduce(recursive, abs(search_vals)))
+t = @benchmark reduce($recursive, abs($search_vals)) samples=100 gcsample=true
+println("Mean: ", mean(t), " Median: ", median(t))
