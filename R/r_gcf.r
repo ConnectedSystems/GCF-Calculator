@@ -38,7 +38,7 @@ get_gcf <- function(func, params) {
 }
 
 mod_get_gcf <- function(func, params) {
-  params <- lapply(sort(params), abs)
+  params <- lapply(params, abs)
   params <- unlist(params)
   sets <- func(params[1])
   limit <- max(sets)
@@ -71,3 +71,14 @@ microbenchmark(mod_get_gcf(improved, expanded))
 
 microbenchmark(Reduce(recursive, abs(expanded)))
 # 49 microseconds
+
+cat("With JIT compilation...")
+cat("importing 2 million values...")
+expanded <- scan("../data/input.in", skip = 1, what = integer())
+
+library(compiler)
+enableJIT(3)
+
+# microbenchmark(mod_get_gcf(improved, expanded))
+
+microbenchmark(Reduce(recursive, abs(expanded)))
